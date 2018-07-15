@@ -34,4 +34,4 @@ DefaultApplication.open(file)
 
 - [`COMSPEC`](https://en.wikipedia.org/wiki/COMSPEC) (Windows)
 - [`xdg-open`](https://linux.die.net/man/1/xdg-open) (Linux)
-- [`open`](https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/open.1.html) (OS X)
+- [`open`](https://ss64.com/osx/open.html) (OS X)
