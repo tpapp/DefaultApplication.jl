@@ -22,6 +22,7 @@ if Sys.islinux()
         @test !isfile(sentinelfile)
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
+        sleep(5)
         @test isfile(sentinelfile)
         got_sentinel = read(sentinel, String)
         @info "Sentinel" expected = sentinel got = got_sentinel
