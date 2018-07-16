@@ -11,7 +11,7 @@ function isemacsrunning()
     if occursin("emacs", processes)
         true
     else
-        @info "process not found" processes = processes
+        @info "process not found" processes = sort(split(processes, "\n"))
         false
     end
 end
