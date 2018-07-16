@@ -19,6 +19,7 @@ git:
 
 before_install:
   - sudo apt-get install -y emacs24 xdg-utils
+  - xdg-mime default emacs.desktop text/plain
   - export EDITOR=emacs
 
 script:
