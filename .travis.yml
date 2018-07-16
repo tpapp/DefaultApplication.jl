@@ -18,7 +18,7 @@ git:
 #  - julia: nightly
 
 before_install:
-#  - sudo apt-get install -y emacs24-nox xdg-utils
+  - sudo apt-get install -y emacs24 xdg-utils
   - export EDITOR=emacs
 
 script:
