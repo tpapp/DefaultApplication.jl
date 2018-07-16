@@ -23,6 +23,8 @@ DefaultApplication.open("/some/file.png")
 |:--------|:-------------|:-------|
 | Linux   | Ubuntu 18.04 | works  |
 | Linux   | Debian 8.0   | works  |
+| Windows | 10           | works  |
+| OS X    | Darwin 17.7  | works  |
 
 If your OS/version is missing, please test as described below and open an issue with the information so that this table can be extended.
 
