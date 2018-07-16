@@ -34,7 +34,7 @@ if Sys.islinux()
         DefaultApplication.open(testfile)
         @info "emacs should now be running"
         # @test isemacsrunning(; details = true)
-        @info "open test" output = read(`xdg-open /tmp/test.txt"`, String)
+        @info "open test" output = read(`xdg-open /tmp/test.txt`, String)
     else
         @warn "Tests are only ran in Travis VM."
     end
