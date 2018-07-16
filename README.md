@@ -21,13 +21,18 @@ DefaultApplication.open("/some/file.png")
 
 Currently there are no unit test since these things are tricky to test for, but testing, bug reports, feature requests and PRs are welcome.
 
-You can use the following short snippet for testing:
+There is a utility function `DefaultApplication.test()` for testing, which prints information for bug reports:
 
 ```julia
-import DefaultApplication
-file = tempname() * ".txt"
-write(file, "some text")
-DefaultApplication.open(file)
+julia> import DefaultApplication
+
+julia> DefaultApplication.test()
+┌ Info: opening text file with the default application
+└   path = "/tmp/juliaIiNmIf.txt"
+┌ Info: If the file was not opened, please copy the output and open an issue at
+│ https://github.com/tpapp/DefaultApplication.jl/issues
+│   KERNEL = :Linux
+└   VERSION = v"0.7.0-beta2.1"
 ```
 
 ## Related documentation

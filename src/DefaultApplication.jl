@@ -19,4 +19,24 @@ function open(filename)
     end
 end
 
+"""
+    DefaultApplication.test()
+
+Helper function that creates text file, attempts to open it with the OS-specific
+default application, and prints information that helps with debugging.
+"""
+function test()
+    path = tempname() * ".txt"
+    write(path, "some text, should be opened in a text editor")
+    @info("opening text file with the default application",
+          path = path)
+    @info("""
+        If the file was not opened, please copy the output and open an issue at
+        https://github.com/tpapp/DefaultApplication.jl/issues
+        """,
+          KERNEL = Sys.KERNEL,
+          VERSION = VERSION)
+    DefaultApplication.open(path)
+end
+
 end # module
