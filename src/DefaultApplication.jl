@@ -36,6 +36,10 @@ function test()
         """,
           KERNEL = Sys.KERNEL,
           VERSION = VERSION)
+    if Sys.iswindows()
+        @info("Version information for windows",
+              windows_version = Sys.windows_version())
+    end
     DefaultApplication.open(path)
 end
 
