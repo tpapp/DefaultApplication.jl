@@ -23,7 +23,8 @@ if Sys.islinux()
         write(testfile, "test text")
         @info("environment",
               EDITOR = get(ENV, "EDITOR", "(undefined)"),
-              EMACSPATH = chomp(read(`which emacs`, String)))
+              EMACSPATH = chomp(read(`which emacs`, String)),
+              XDGMIME = read(`xdg-mime query default text/plain`, String)
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
         @info "emacs should now be running"
