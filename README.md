@@ -17,6 +17,15 @@ DefaultApplication.open("/some/file.png")
 
 `open` is not exported from the package, because it would clash with `Base.open`.
 
+## Status
+
+| OS      | version      | status |
+|:--------|:-------------|:-------|
+| Linux   | Ubuntu 18.04 | works  |
+| Linux   | Debian 8.0   | works  |
+
+If your OS/version is missing, please test as described below and open an issue with the information so that this table can be extended.
+
 ## Testing
 
 Currently there are no unit test since these things are tricky to test for, but testing, bug reports, feature requests and PRs are welcome.
@@ -34,13 +43,6 @@ julia> DefaultApplication.test()
 │   KERNEL = :Linux
 └   VERSION = v"0.7.0-beta2.1"
 ```
-
-## Status
-
-| OS      | version      | status |
-|:--------|:-------------|:-------|
-| Linux   | Ubuntu 18.04 | works  |
-| Linux   | Debian 8.0   | works  |
 
 ## Related documentation
 
