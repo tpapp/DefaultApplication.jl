@@ -13,7 +13,9 @@ if Sys.islinux()
         @test !isemacsrunning() # check that it is not running accidentally
         testfile = "/tmp/test.txt"
         write(testfile, "test text")
-        @info("environment", EDITOR = get(ENV, "EDITOR", "(undefined)"))
+        @info("environment",
+              EDITOR = get(ENV, "EDITOR", "(undefined)"),
+              EMACSPATH = chomp(read(`which emacs`, String)))
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
         @info "emacs should now be running"
