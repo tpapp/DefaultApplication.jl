@@ -6,7 +6,15 @@ TRAVIS = get(ENV, "TRAVIS", "false") == "true"
 # Test that a text file is opened by Emacs, the default editor. This is
 # accomplished by checking the output of `ps`.
 
-isemacsrunning() = occursin("emacs", read(`ps -e`, String))
+function isemacsrunning()
+    processes = read(`ps axco command`, String)
+    if occursin("emacs", processes)
+        true
+    else
+        @info "process not found" processes = processes
+        false
+    end
+end
 
 if Sys.islinux()
     if TRAVIS
