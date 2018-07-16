@@ -7,12 +7,12 @@ Open a file with the default application determined by the OS.
 """
 function open(filename)
     @static if Sys.isapple()
-        run(`open $(filename)`)
+        run(`open $(filename)`; wait = false)
     elseif Sys.islinux() || Sys.isbsd()
-        run(`xdg-open $(filename)`)
+        run(`xdg-open $(filename)`; wait = false)
     elseif Sys.iswindows()
         cmd = get(ENV, "COMSPEC", "cmd")
-        run(`$(ENV["COMSPEC"]) /c start $(filename)`)
+        run(`$(ENV["COMSPEC"]) /c start $(filename)`; wait = false)
     else
         @warn("Opening files the default application is not supported on this OS.",
               KERNEL = Sys.KERNEL)
