@@ -35,6 +35,13 @@ julia> DefaultApplication.test()
 └   VERSION = v"0.7.0-beta2.1"
 ```
 
+## Status
+
+| OS      | version      | status |
+|:--------|:-------------|:-------|
+| Linux   | Ubuntu 18.04 | works  |
+| Linux   | Debian 8.0   | works  |
+
 ## Related documentation
 
 - [`COMSPEC`](https://en.wikipedia.org/wiki/COMSPEC) (Windows)
