@@ -7,7 +7,7 @@ TRAVIS = get(ENV, "TRAVIS", "false") == "true"
 # accomplished by checking the output of `ps`.
 
 function isrunning(program; details = false)
-    processes = read(`ps axo command`, String)
+    processes = read(`ps axco command`, String)
     if occursin(program, processes)
         true
     else

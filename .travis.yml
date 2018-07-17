@@ -22,6 +22,7 @@ before_install:
   - mkdir -p ~/.config
   - export EDITOR=jmacs
   - export DISPLAY="dummy"      # trick xdg-open to assuming a display
+  - export BROWSER="jmacs"      # trick xdg-open to use jmacs as the browser (fallback)
   - xdg-mime default jmacs.desktop text/plain
 
 script:
