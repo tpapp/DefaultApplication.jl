@@ -34,7 +34,7 @@ If your OS/version is missing, please test as described below and open an issue 
 
 ## Testing
 
-Currently there are no unit test since these things are tricky to test for, but testing, bug reports, feature requests and PRs are welcome.
+Currently there are only partial unit tests, since the functionality of this package is difficult to test without a desktop environment. Testing, bug reports, feature requests and PRs are welcome.
 
 There is a utility function `DefaultApplication.test()` for testing, which prints information for bug reports:
 
@@ -43,11 +43,21 @@ julia> import DefaultApplication
 
 julia> DefaultApplication.test()
 ┌ Info: opening text file with the default application
-└   path = "/tmp/juliaIiNmIf.txt"
+└   path = "/tmp/juliaT2oWTX.txt"
 ┌ Info: If the file was not opened, please copy the output and open an issue at
-│ https://github.com/tpapp/DefaultApplication.jl/issues
-│   KERNEL = :Linux
-└   VERSION = v"0.7.0-beta2.1"
+└ https://github.com/tpapp/DefaultApplication.jl/issues
+Julia Version 0.7.0-beta2.26
+Commit 299300a409* (2018-07-17 04:35 UTC)
+Platform Info:
+  OS: Linux (x86_64-linux-gnu)
+  CPU: Intel(R) Core(TM) i7-6560U CPU @ 2.20GHz
+  WORD_SIZE: 64
+  LIBM: libopenlibm
+  LLVM: libLLVM-6.0.0 (ORCJIT, skylake)
+Environment:
+  JULIA_NIGHTLY_PARENT = ~/src
+  JULIA_NIGHTLY_SYMLINK = ~/bin/julia-latest
+Process(`xdg-open /tmp/juliaT2oWTX.txt`, ProcessRunning)
 ```
 
 ## Related documentation
