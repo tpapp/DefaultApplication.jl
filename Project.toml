@@ -1,6 +1,6 @@
 authors = ["Tamas K. Papp <tkpapp@gmail.com>"]
 name = "DefaultApplication"
 uuid = "02461166-8828-11e8-2388-d11131fa06e9"
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
