@@ -29,6 +29,7 @@ if Sys.islinux()
         @info("environment",
               XDGMIMETYPE = chomp(read(`xdg-mime query filetype $(testfile)`, String)),
               XDGMIMEDEFAULT = chomp(read(`xdg-mime query default text/html`, String)))
+        @info "test open" msg = read(`xdg-open $(testfile)`, String)
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
         sleep(5)
