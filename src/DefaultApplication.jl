@@ -1,9 +1,11 @@
 module DefaultApplication
 
 """
-    DefaultApplication.open(filename)
+    DefaultApplication.open(filename; wait = false)
 
 Open a file with the default application determined by the OS.
+
+The argument `wait` is passed to `run`.
 """
 function open(filename; wait = false)
     @static if Sys.isapple()
@@ -33,9 +35,8 @@ function test()
     @info("""
         If the file was not opened, please copy the output and open an issue at
         https://github.com/tpapp/DefaultApplication.jl/issues
-        """,
-          KERNEL = Sys.KERNEL,
-          VERSION = VERSION)
+        """)
+    versioninfo()
     if Sys.iswindows()
         @info("Version information for windows",
               windows_version = Sys.windows_version())
