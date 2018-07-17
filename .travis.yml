@@ -18,11 +18,10 @@ git:
 #  - julia: nightly
 
 before_install:
-  - sudo apt-get install -y links xdg-utils
+  - sudo apt-get install -y joe xdg-utils
   - mkdir -p ~/.config
-  - xdg-mime default links.desktop text/html
-  - echo "<html></html>" > /tmp/test.html
-  - xdg-open /tmp/test.html
+  - export EDITOR=jmacs
+  - xdg-mime default jmacs.desktop text/plain
 
 script:
  - julia test_script.jl
