@@ -21,6 +21,7 @@ before_install:
   - sudo apt-get install -y joe xdg-utils
   - mkdir -p ~/.config
   - export EDITOR=jmacs
+  - export DISPLAY="dummy"      # trick xdg-open to assuming a display
   - xdg-mime default jmacs.desktop text/plain
 
 script:
