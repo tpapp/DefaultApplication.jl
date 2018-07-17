@@ -3,9 +3,6 @@ import DefaultApplication
 
 TRAVIS = get(ENV, "TRAVIS", "false") == "true"
 
-# Test that a text file is opened by Emacs, the default editor. This is
-# accomplished by checking the output of `ps`.
-
 function isrunning(program; details = false)
     processes = read(`ps axco command`, String)
     if occursin(program, processes)
@@ -23,9 +20,11 @@ end
 
 if Sys.islinux()
     if TRAVIS
+        # Test that a text file is opened by jmacs (setup in .travis.yml).
         @test !isrunning("jmacs") # check that it is not running accidentally
         testfile = "/tmp/test.txt"
         write(testfile, "test text")
+        ## uncomment lines below for debug information
         # @info("environment",
         #       XDGMIMETYPE = chomp(read(`xdg-mime query filetype $(testfile)`, String)),
         #       XDGMIMEDEFAULT = chomp(read(`xdg-mime query default text/plain`, String)))
