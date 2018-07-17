@@ -26,12 +26,12 @@ if Sys.islinux()
         @test !isrunning("jmacs") # check that it is not running accidentally
         testfile = "/tmp/test.txt"
         write(testfile, "test text")
-        @info("environment",
-              XDGMIMETYPE = chomp(read(`xdg-mime query filetype $(testfile)`, String)),
-              XDGMIMEDEFAULT = chomp(read(`xdg-mime query default text/plain`, String)))
+        # @info("environment",
+        #       XDGMIMETYPE = chomp(read(`xdg-mime query filetype $(testfile)`, String)),
+        #       XDGMIMEDEFAULT = chomp(read(`xdg-mime query default text/plain`, String)))
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
-        sleep(5)
+        sleep(1)
         @info "jmacs should now be running"
         @test isrunning("jmacs"; details = true)
     else
