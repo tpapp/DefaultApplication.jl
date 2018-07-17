@@ -27,9 +27,11 @@ if Sys.islinux()
         testfile = "/tmp/test.html"
         write(testfile, "<html><body><h1>hello world</h1></body><html>")
         @info("environment",
-              XDGMIME = chomp(read(`xdg-mime query default text/html`, String)))
+              XDGMIMETYPE = chomp(read(`xdg-mime query filetype $(testfile)`, String)),
+              XDGMIMEDEFAULT = chomp(read(`xdg-mime query default text/html`, String)))
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
+        sleep(5)
         @info "links should now be running"
         @test isrunning("links"; details = true)
     else
