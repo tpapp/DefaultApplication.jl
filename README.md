@@ -11,6 +11,8 @@ Julia library for opening a file with the default application determined by the 
 
 Many packages implement variations on the same short code snippet. This package maintains a version that can be shared or tested.
 
+This package intends to be very lightweight, and has no dependencies. Nevertheless, if you still don't want to use this as a dependency, you can of course also copy the code of `DefaultApplication.open()` to another package, but then you will have to repeat this to keep up with bugfixes and developments.
+
 ## Usage
 
 ```julia
