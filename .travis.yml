@@ -18,9 +18,9 @@ git:
 #  - julia: nightly
 
 before_install:
-  - sudo apt-get install -y emacs24 xdg-utils
-  - xdg-mime default emacs.desktop text/plain
-  - export EDITOR=emacs
+  - sudo apt-get install -y links xdg-utils
+  - mkdir ~/.config
+  - xdg-mime default links.desktop text/html
 
 script:
  - julia test_script.jl

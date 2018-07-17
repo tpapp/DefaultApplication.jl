@@ -6,13 +6,13 @@ TRAVIS = get(ENV, "TRAVIS", "false") == "true"
 # Test that a text file is opened by Emacs, the default editor. This is
 # accomplished by checking the output of `ps`.
 
-function isemacsrunning(; details = false)
+function isrunning(program; details = false)
     processes = read(`ps axco command`, String)
-    if occursin("emacs", processes)
+    if occursin(program, processes)
         true
     else
         if details
-            @info("process not found, processes")
+            @info("process $(program) not found in processes")
             for p in sort(split(processes, "\n"))
                 @info p
             end
@@ -23,18 +23,15 @@ end
 
 if Sys.islinux()
     if TRAVIS
-        @test !isemacsrunning() # check that it is not running accidentally
-        testfile = "/tmp/test.txt"
-        write(testfile, "test text")
+        @test !isrunning("links") # check that it is not running accidentally
+        testfile = "/tmp/test.html"
+        write(testfile, "<html><body><h1>hello world</h1></body><html>")
         @info("environment",
-              EDITOR = get(ENV, "EDITOR", "(undefined)"),
-              EMACSPATH = chomp(read(`which emacs`, String)),
-              XDGMIME = chomp(read(`xdg-mime query default text/plain`, String)))
+              XDGMIME = chomp(read(`xdg-mime query default text/html`, String)))
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
-        @info "emacs should now be running"
-        # @test isemacsrunning(; details = true)
-        @info "open test" output = read(`xdg-open --debug=1 /tmp/test.txt`, String)
+        @info "links should now be running"
+        @test isrunning("links"; details = true)
     else
         @warn "Tests are only ran in Travis VM."
     end
