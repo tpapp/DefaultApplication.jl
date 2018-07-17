@@ -19,7 +19,7 @@ git:
 
 before_install:
   - sudo apt-get install -y links xdg-utils
-  - mkdir ~/.config
+  - mkdir -p ~/.config
   - xdg-mime default links.desktop text/html
 
 script:
