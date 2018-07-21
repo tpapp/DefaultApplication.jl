@@ -1,6 +1,6 @@
 # DefaultApplication.jl
 
-![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+![Lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 [![Build Status](https://travis-ci.org/tpapp/DefaultApplication.jl.svg?branch=master)](https://travis-ci.org/tpapp/DefaultApplication.jl)
 [![Coverage Status](https://coveralls.io/repos/tpapp/DefaultApplication.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/tpapp/DefaultApplication.jl?branch=master)
 [![codecov.io](http://codecov.io/github/tpapp/DefaultApplication.jl/coverage.svg?branch=master)](http://codecov.io/github/tpapp/DefaultApplication.jl?branch=master)
