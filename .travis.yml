@@ -11,6 +11,15 @@ notifications:
 git:
   depth: 99999999
 
+before_install:
+  - sudo apt-get install -y joe xdg-utils
+  - mkdir -p ~/.config
+  ## lines below commented out because xdg-open uses the browser fallback
+  # - export EDITOR=jmacs
+  # - export DISPLAY="dummy"      # trick xdg-open to assuming a display
+  # - xdg-mime default jmacs.desktop text/plain
+  - export BROWSER="jmacs" # trick xdg-open to use jmacs as the browser (fallback, this is the one actually used)
+
 ## uncomment the following lines to allow failures on nightly julia
 ## (tests will run but not make your overall status red)
 #matrix:
