@@ -1,5 +1,7 @@
 module DefaultApplication
 
+import InteractiveUtils
+
 """
     DefaultApplication.open(filename; wait = false)
 
@@ -36,7 +38,7 @@ function test()
         If the file was not opened, please copy the output and open an issue at
         https://github.com/tpapp/DefaultApplication.jl/issues
         """)
-    versioninfo()
+    InteractiveUtils.versioninfo(stdout; verbose = true)
     if Sys.iswindows()
         @info("Version information for windows",
               windows_version = Sys.windows_version())
