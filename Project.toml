@@ -1,7 +1,7 @@
 name = "DefaultApplication"
 uuid = "3f0dd361-4fe0-5fc6-8523-80b14ec94d85"
 authors = ["Tamas K. Papp <tkpapp@gmail.com>"]
-version = "0.1.4"
+version = "1.0.0"
 
 [deps]
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
