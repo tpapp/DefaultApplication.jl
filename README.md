@@ -25,13 +25,13 @@ DefaultApplication.open("/some/file.png")
 
 | OS      | version      | status  |
 |:--------|:-------------|:------- |
-| Linux   | Ubuntu 19.10 | ✅      |
-| Linux   | Ubuntu 19.04 | ✅      |
-| Linux   | Ubuntu 18.04 | ✅      |
-| Linux   | Ubuntu 16.04 | ✅ (CI) |
-| Linux   | Debian 8.0   | ✅      |
-| OS X    | Darwin 17.7  | ✅      |
-| Windows | 10           | ✅      |
+| Linux   | Ubuntu 19.10 | `✅`      |
+| Linux   | Ubuntu 19.04 | `✅`      |
+| Linux   | Ubuntu 18.04 | `✅`      |
+| Linux   | Ubuntu 16.04 | `✅` (CI) |
+| Linux   | Debian 8.0   | `✅`      |
+| OS X    | Darwin 17.7  | `✅`      |
+| Windows | 10           | `✅`      |
 
 If your OS/version is missing, please test as described below and open an issue with the information so that this table can be extended.
 
