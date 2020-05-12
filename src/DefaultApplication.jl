@@ -16,7 +16,7 @@ function open(filename; wait = false)
         run(`xdg-open $(filename)`; wait = wait)
     elseif Sys.iswindows()
         cmd = get(ENV, "COMSPEC", "cmd")
-        run(`$(ENV["COMSPEC"]) /c start $(filename)`; wait = wait)
+        run(`$(cmd) /c start "" $(filename)`; wait = wait)
     else
         @warn("Opening files the default application is not supported on this OS.",
               KERNEL = Sys.KERNEL)
