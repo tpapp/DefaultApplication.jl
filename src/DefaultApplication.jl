@@ -15,8 +15,8 @@ function open(filename; wait = false)
     elseif Sys.islinux() || Sys.isbsd()
         run(`xdg-open $(filename)`; wait = wait)
     elseif Sys.iswindows()
-        cmd = get(ENV, "COMSPEC", "cmd")
-        run(`$(ENV["COMSPEC"]) /c start $(filename)`; wait = wait)
+        cmd = get(ENV, "COMSPEC", "cmd.exe")
+        run(`$(cmd) /c start $(filename)`; wait = wait)
     else
         @warn("Opening files the default application is not supported on this OS.",
               KERNEL = Sys.KERNEL)
