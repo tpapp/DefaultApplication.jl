@@ -2,6 +2,10 @@ module DefaultApplication
 
 import InteractiveUtils
 
+# based on https://stackoverflow.com/questions/38086185/
+const _is_wsl = Sys.islinux() && isfile("/proc/sys/kernel/osrelease") &&
+    occursin(r"microsoft|wsl"i, read("/proc/sys/kernel/osrelease", String))
+
 """
     DefaultApplication.open(filename; wait = false)
 
@@ -12,6 +16,10 @@ The argument `wait` is passed to `run`.
 function open(filename; wait = false)
     @static if Sys.isapple()
         run(`open $(filename)`; wait = wait)
+    elseif _is_wsl
+        # wslview doesn't like absolute paths for some reason, hence basename/dirname here
+        absfile = abspath(filename)
+        run(Cmd(`wslview $(basename(absfile))`; dir = dirname(absfile)); wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
         run(`xdg-open $(filename)`; wait = wait)
     elseif Sys.iswindows()
