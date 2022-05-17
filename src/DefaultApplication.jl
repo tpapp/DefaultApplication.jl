@@ -19,15 +19,13 @@ function open(filename; wait = false)
     @static if Sys.isapple()
         run(`open $(filename)`; wait = wait)
     elseif _is_wsl
-        # Powershell can open *relative* paths in WSL, hence basename/dirname here.
+        # Powershell can open *relative* paths in WSL, hence using relpath
         # Could use wslview instead, but powershell is more universally available.
         # Could use cmd + wslpath instead, but cmd complains about the working directory.
         # Quotes around the filename are to deal with spaces.
-        realfile = realpath(filename)
-        dir = dirname(realfile)
-        base = basename(realfile)
-        cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(base)\"`
-        run(Cmd(cmd; dir = dir); wait = wait)
+        relfile = relpath(filename)
+        cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(relfile)\"`
+        run(cmd; wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
         run(`xdg-open $(filename)`; wait = wait)
     elseif Sys.iswindows()
