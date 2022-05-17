@@ -1,6 +1,11 @@
 # from https://discourse.julialang.org/t/easy-workflow-file-for-setting-up-github-actions-ci-for-your-julia-package/49765
 
 name: CI
+# pretend that our browser is jmacs
+run: sudo apt-get install -y joe xdg-utils
+run: mkdir -p ~/.config
+env:
+  BROWSER: jmacs
 on:
   pull_request:
     branches:
@@ -46,28 +51,3 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           file: lcov.info
-  ## NOTE: uncomment below to generate and deploy docs, also add the relevant deploy key as described
-  ## in https://juliadocs.github.io/Documenter.jl/dev/man/hosting/#Authentication:-SSH-Deploy-Keys
-  # docs:                        
-  #   name: Documentation
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: julia-actions/setup-julia@v1
-  #       with:
-  #         version: '1'
-  #     - run: |
-  #         julia --project=docs -e '
-  #           using Pkg
-  #           Pkg.develop(PackageSpec(path=pwd()))
-  #           Pkg.instantiate()'
-  #     - run: |
-  #         julia --project=docs -e '
-  #           using Documenter: doctest
-  #           using DefaultApplication
-  #           DocMeta.setdocmeta!(DefaultApplication, :DocTestSetup, :(using DefaultApplication); recursive=true)
-  #           doctest(DefaultApplication)'
-  #     - run: julia --project=docs docs/make.jl
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
