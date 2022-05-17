@@ -3,8 +3,10 @@ module DefaultApplication
 import InteractiveUtils
 
 # based on https://stackoverflow.com/questions/38086185/
-const _is_wsl = Sys.islinux() && isfile("/proc/sys/kernel/osrelease") &&
-    occursin(r"microsoft|wsl"i, read("/proc/sys/kernel/osrelease", String))
+const _is_wsl = Sys.islinux() &&
+    let osrelease = "/proc/sys/kernel/osrelease"
+        isfile(osrelease) && occursin(r"microsoft|wsl"i, read(osrelease, String))
+    end
 
 """
     DefaultApplication.open(filename; wait = false)
