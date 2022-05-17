@@ -2,6 +2,12 @@ module DefaultApplication
 
 import InteractiveUtils
 
+# based on https://stackoverflow.com/questions/38086185/
+const _is_wsl = Sys.islinux() &&
+    let osrelease = "/proc/sys/kernel/osrelease"
+        isfile(osrelease) && occursin(r"microsoft|wsl"i, read(osrelease, String))
+    end
+
 """
     DefaultApplication.open(filename; wait = false)
 
@@ -12,6 +18,14 @@ The argument `wait` is passed to `run`.
 function open(filename; wait = false)
     @static if Sys.isapple()
         run(`open $(filename)`; wait = wait)
+    elseif _is_wsl
+        # Powershell can open *relative* paths in WSL, hence using relpath
+        # Could use wslview instead, but powershell is more universally available.
+        # Could use cmd + wslpath instead, but cmd complains about the working directory.
+        # Quotes around the filename are to deal with spaces.
+        relfile = relpath(filename)
+        cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(relfile)\"`
+        run(cmd; wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
         run(`xdg-open $(filename)`; wait = wait)
     elseif Sys.iswindows()
