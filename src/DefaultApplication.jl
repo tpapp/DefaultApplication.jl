@@ -19,9 +19,15 @@ function open(filename; wait = false)
     @static if Sys.isapple()
         run(`open $(filename)`; wait = wait)
     elseif _is_wsl
-        # wslview doesn't like absolute paths for some reason, hence basename/dirname here
-        absfile = abspath(filename)
-        run(Cmd(`wslview $(basename(absfile))`; dir = dirname(absfile)); wait = wait)
+        # Powershell can open *relative* paths in WSL, hence basename/dirname here.
+        # Could use wslview instead, but powershell is more universally available.
+        # Could use cmd + wslpath instead, but cmd complains about the working directory.
+        # Quotes around the filename are to deal with spaces.
+        realfile = realpath(filename)
+        dir = dirname(realfile)
+        base = basename(realfile)
+        cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(base)\"`
+        run(Cmd(cmd; dir = dir); wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
         run(`xdg-open $(filename)`; wait = wait)
     elseif Sys.iswindows()
