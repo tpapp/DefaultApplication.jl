@@ -1,7 +1,7 @@
 using Test
 import DefaultApplication
 
-TRAVIS = get(ENV, "TRAVIS", "false") == "true"
+CI = get(ENV, "CI", "false") == "true"
 
 function isrunning(program; details = false)
     processes = read(`ps axco command`, String)
@@ -19,7 +19,7 @@ function isrunning(program; details = false)
 end
 
 if Sys.islinux()
-    if TRAVIS
+    if CI
         # Test that a text file is opened by jmacs (setup in .travis.yml).
         @test !isrunning("jmacs") # check that it is not running accidentally
         testfile = "/tmp/test.txt"
@@ -34,6 +34,6 @@ if Sys.islinux()
         @info "jmacs should now be running"
         @test isrunning("jmacs"; details = true)
     else
-        @warn "Tests are only ran in Travis VM."
+        @warn "Tests are only ran in CI."
     end
 end
