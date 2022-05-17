@@ -2,8 +2,9 @@
 
 name: CI
 # pretend that our browser is jmacs
-run: sudo apt-get install -y joe xdg-utils
-run: mkdir -p ~/.config
+run: |
+  sudo apt-get install -y joe xdg-utils
+  mkdir -p ~/.config
 env:
   BROWSER: jmacs
 on:
