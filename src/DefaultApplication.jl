@@ -27,7 +27,7 @@ function open(filename; wait = false)
         cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(relfile)\"`
         run(cmd; wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
-        run(`xdg-open $(filename)`; wait = true)
+        run(`xdg-open --debug=1 $(filename)`; wait = true)
     elseif Sys.iswindows()
         cmd = get(ENV, "COMSPEC", "cmd.exe")
         run(`$(cmd) /c start $(filename)`; wait = wait)
