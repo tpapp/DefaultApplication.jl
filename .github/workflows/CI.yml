@@ -43,8 +43,9 @@ jobs:
       - uses: julia-actions/julia-buildpkg@v1
       - run: |
           mkdir -p ~/.config
-          mkdir -p ~/.local/share/applications/
-          echo $PWD
+          mkdir -p ~/.local/share/applications
+          cp $GITHUB_WORKSPACE/test/extra/save-argument.desktop ~/.local/share/applications/
+          cp $GITHUB_WORKSPACE/test/extra/save-argument /usr/local/bin/
           echo test | /usr/bin/run-mailcap --debug=1 --action=view text/plain:- >/dev/null 
       - uses: julia-actions/julia-runtest@v1
       - uses: julia-actions/julia-processcoverage@v1
