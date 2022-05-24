@@ -46,6 +46,7 @@ jobs:
           mkdir -p ~/.local/share/applications
           cp $GITHUB_WORKSPACE/test/extra/save-argument.desktop ~/.local/share/applications/
           cp $GITHUB_WORKSPACE/test/extra/save-argument /usr/local/bin/
+          update-desktop-database -v ~/.local/share/applications
           xdg-mime default save-argument.desktop text/plain
           echo test | /usr/bin/run-mailcap --debug=1 --action=view text/plain:- >/dev/null 
       - uses: julia-actions/julia-runtest@v1
