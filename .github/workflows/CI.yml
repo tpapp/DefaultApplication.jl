@@ -1,9 +1,6 @@
 # from https://discourse.julialang.org/t/easy-workflow-file-for-setting-up-github-actions-ci-for-your-julia-package/49765
 
 name: CI
-# pretend that our browser is jmacs
-env:
-  BROWSER: jmacs
 on:
   pull_request:
     branches:
@@ -45,8 +42,9 @@ jobs:
             ${{ runner.os }}-
       - uses: julia-actions/julia-buildpkg@v1
       - run: |
-          sudo apt-get install -y joe xdg-utils
           mkdir -p ~/.config
+          mkdir -p ~/.local/share/applications/
+          echo $PWD
           echo test | /usr/bin/run-mailcap --debug=1 --action=view text/plain:- >/dev/null 
       - uses: julia-actions/julia-runtest@v1
       - uses: julia-actions/julia-processcoverage@v1
