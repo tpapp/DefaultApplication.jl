@@ -42,6 +42,7 @@ jobs:
             ${{ runner.os }}-
       - uses: julia-actions/julia-buildpkg@v1
       - run: |
+          sudo apt install xdg-utils desktop-file-utils
           mkdir -p ~/.config
           mkdir -p ~/.local/share/applications
           cp $GITHUB_WORKSPACE/test/extra/save-argument.desktop ~/.local/share/applications/
