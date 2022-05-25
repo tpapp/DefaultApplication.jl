@@ -3,7 +3,7 @@ echo "Setting up MIME environment for CI"
 mkdir -p ~/.config
 mkdir -p ~/.local/share/applications
 cp $GITHUB_WORKSPACE/test/extra/save-argument.desktop ~/.local/share/applications/
-echo '[Default Applications]\ntext/plain=save-argument.desktop\n' > ~/.config/mimeapps.list 
+# echo '[Default Applications]\ntext/plain=save-argument.desktop\n' > ~/.config/mimeapps.list 
 cp $GITHUB_WORKSPACE/test/extra/save-argument /usr/local/bin/
 update-desktop-database -v ~/.local/share/applications
 xdg-mime default save-argument.desktop text/plain
