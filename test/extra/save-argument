@@ -1,2 +1,4 @@
-#!/bin/sh
-echo $1 > /tmp/saved-argument
+#!/bin/bash
+FILE=/tmp/saved-argument
+echo "writing $1 to $FILE"
+echo $1 > $FILE

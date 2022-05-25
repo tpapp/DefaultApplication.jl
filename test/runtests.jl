@@ -19,7 +19,7 @@ if Sys.islinux()
         DefaultApplication.open(testfile)
         sleep(1)
         @info "test that file was opened"
-        @test read(sentinel, String) == testfile
+        @test chomp(read(sentinel, String)) == testfile
     else
         @warn "Tests are only ran in CI."
     end
