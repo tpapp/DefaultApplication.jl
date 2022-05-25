@@ -1,0 +1,6 @@
+#!/bin/bash
+FILE=/tmp/saved-argument
+echo "writing $1 to $FILE"
+echo $1 > $FILE
+
+# NOTE: this simulates an application for the purposes of CI, by writing the first argument to $FILE.
