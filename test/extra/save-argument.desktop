@@ -1,7 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=save-argument
-Path=~/bin
 Exec=save-argument
 Terminal=false
 MimeType=text/plain
