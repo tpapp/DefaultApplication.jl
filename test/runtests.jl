@@ -5,8 +5,10 @@ CI = get(ENV, "CI", "false") == "true"
 
 if Sys.islinux()
     if CI
-        # Test that a text file is opened by jmacs (setup in Github Actions).
-        @test !isrunning("jmacs") # check that it is not running accidentally
+        # ensure clean slate
+        sentinel = "/tmp/saved-argument"
+        rm(sentinel; force = true)
+        # set up test file
         testfile = "/tmp/test.txt"
         write(testfile, "test text")
         ## uncomment lines below for debug information
@@ -16,8 +18,8 @@ if Sys.islinux()
         @info "opening $(testfile)"
         DefaultApplication.open(testfile)
         sleep(1)
-        @info "test that file was opened running"
-        @test read("/tmp/saved-argument", String) == testfile
+        @info "test that file was opened"
+        @test read(sentinel, String) == testfile
     else
         @warn "Tests are only ran in CI."
     end
