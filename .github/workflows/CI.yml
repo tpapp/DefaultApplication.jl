@@ -4,7 +4,7 @@ name: CI
 env:
   # XDG_CURRENT_DESKTOP: XFCE     # lie
   XDG_UTILS_DEBUG_LEVEL: 2      # debug
-  DISPLAY: pretend
+  BROWSER: save-argument
 on:
   pull_request:
     branches:
