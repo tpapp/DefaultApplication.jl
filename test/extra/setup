@@ -7,3 +7,4 @@ echo '[Default Applications]\ntext/plain=save-argument.desktop\n' > ~/.config/mi
 cp $GITHUB_WORKSPACE/test/extra/save-argument /usr/local/bin/
 update-desktop-database -v ~/.local/share/applications
 xdg-mime default save-argument.desktop text/plain
+update-mime --local
