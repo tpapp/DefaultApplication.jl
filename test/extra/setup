@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Setting up MIME environment for CI"
 mkdir -p ~/.config
 mkdir -p ~/.local/share/applications
 cp $GITHUB_WORKSPACE/test/extra/save-argument.desktop ~/.local/share/applications/
