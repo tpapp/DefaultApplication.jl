@@ -46,8 +46,13 @@ jobs:
       - uses: julia-actions/julia-buildpkg@v1
       - run: |
           sudo apt-get install xdg-utils desktop-file-utils libfile-mimeinfo-perl
+          echo "setup"
           $GITHUB_WORKSPACE/test/extra/setup
+          echo "cat ~/.config/mimeapps.list"
           cat ~/.config/mimeapps.list
+          echo "xdg mime info"
+          xdg-mime query default text/plain
+          echo "consistency tests"
           save-argument test
           cat /tmp/saved-argument
           touch /tmp/x.txt
