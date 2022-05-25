@@ -2,7 +2,8 @@
 
 name: CI
 env:
-  XDG_UTILS_DEBUG_LEVEL: 2
+  XDG_CURRENT_DESKTOP: XFCE     # lie
+  XDG_UTILS_DEBUG_LEVEL: 2      # debug
 on:
   pull_request:
     branches:
