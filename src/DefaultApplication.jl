@@ -24,24 +24,32 @@ function open(filename; wait = false)
         # Could use cmd + wslpath instead, but cmd complains about the working directory.
         # Quotes around the filename are to deal with spaces.
         # (The ''-quotes added by ``-interpolation are not enough).
-        if ispath(filename)
+        if !_win__cmd_is_too_long(`stat($filename)`) && ispath(filename)
             path = relpath(filename)
         else
             # Leave e.g. URLs alone (`relpath` deletes one of the slashes in `https://`)
             path = filename
         end
-        cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(path)\"`
-        run(cmd; wait = wait)
+        run(_powershell_start_cmd(path); wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
         run(`xdg-open $(filename)`; wait = wait)
     elseif Sys.iswindows()
-        cmd = get(ENV, "COMSPEC", "cmd.exe")
-        run(`$(cmd) /c start $(filename)`; wait = wait)
+        cmd_exe = get(ENV, "COMSPEC", "cmd.exe")
+        cmd = `$(cmd_exe) /c start $(filename)`
+        if _win__cmd_is_too_long(cmd)
+            cmd = _powershell_start_cmd(filename)
+        end
+        run(cmd; wait = wait)
     else
         @warn("Opening files the default application is not supported on this OS.",
               KERNEL = Sys.KERNEL)
     end
 end
+
+# https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/command-line-string-limitation
+_win__cmd_is_too_long(cmd) = length(string(cmd)) > 8191
+
+_powershell_start_cmd(path) = `powershell.exe -NoProfile -NonInteractive -Command start \"$(path)\"`
 
 """
     DefaultApplication.test()
