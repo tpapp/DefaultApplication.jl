@@ -23,8 +23,14 @@ function open(filename; wait = false)
         # Could use wslview instead, but powershell is more universally available.
         # Could use cmd + wslpath instead, but cmd complains about the working directory.
         # Quotes around the filename are to deal with spaces.
-        relfile = relpath(filename)
-        cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(relfile)\"`
+        # (The ''-quotes added by ``-interpolation are not enough).
+        if ispath(filename)
+            path = relpath(filename)
+        else
+            # Leave e.g. URLs alone (`relpath` deletes one of the slashes in `https://`)
+            path = filename
+        end
+        cmd = `powershell.exe -NoProfile -NonInteractive -Command start \"$(path)\"`
         run(cmd; wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
         run(`xdg-open $(filename)`; wait = wait)
