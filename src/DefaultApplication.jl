@@ -24,10 +24,17 @@ function open(filename; wait = false)
         # Could use cmd + wslpath instead, but cmd complains about the working directory.
         # Quotes around the filename are to deal with spaces.
         # (The ''-quotes added by ``-interpolation are not enough).
-        if !_win__cmd_is_too_long(`stat($filename)`) && ispath(filename)
+        file_exists = false
+        try
+            file_exists = ispath(filename)
+        catch
+            # `stat(filename)` fails if `filename` is too long (`ENAMETOOLONG`)
+        end
+        if file_exists
             path = relpath(filename)
         else
-            # Leave e.g. URLs alone (`relpath` deletes one of the slashes in `https://`)
+            # Leave e.g. URLs alone (`relpath` deletes one of the
+            # slashes in `https://` and removes `#` parameters)
             path = filename
         end
         run(_powershell_start_cmd(path); wait = wait)
