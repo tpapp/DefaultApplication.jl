@@ -22,15 +22,7 @@ function open(filename; wait = false)
         # Powershell can open *relative* paths in WSL, hence using relpath
         # Could use wslview instead, but powershell is more universally available.
         # Could use cmd + wslpath instead, but cmd complains about the working directory.
-        # Quotes around the filename are to deal with spaces.
-        # (The ''-quotes added by ``-interpolation are not enough).
-        file_exists = false
-        try
-            file_exists = ispath(filename)
-        catch
-            # `stat(filename)` fails if `filename` is too long (`ENAMETOOLONG`)
-        end
-        if file_exists
+        if _is_ok_to_relpath(filename)
             path = relpath(filename)
         else
             # Leave e.g. URLs alone (`relpath` deletes one of the
@@ -57,6 +49,19 @@ end
 _win__cmd_is_too_long(cmd) = length(string(cmd)) > 8191
 
 _powershell_start_cmd(path) = `powershell.exe -NoProfile -NonInteractive -Command start \"$(path)\"`
+# Quotes around the filename are to deal with spaces.
+# (The ''-quotes added by ``-interpolation are not enough).
+
+_is_ok_to_relpath(path) = begin
+    try
+        file_exists = ispath(path)
+        return file_exists
+    catch
+        # `stat` (which is called by `ispath`) fails if the given path
+        # is too long (`IOError: … (ENAMETOOLONG)`)
+        return false
+    end
+end
 
 """
     DefaultApplication.test()
