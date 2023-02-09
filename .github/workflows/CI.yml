@@ -46,7 +46,8 @@ jobs:
             ${{ runner.os }}-test-
             ${{ runner.os }}-
       - uses: julia-actions/julia-buildpkg@v1
-      - run: |
+      - if: runner.os == 'Linux'
+        run: |
           sudo apt-get install xdg-utils
           cp $GITHUB_WORKSPACE/test/extra/save-argument /usr/local/bin/
       - uses: julia-actions/julia-runtest@v1
