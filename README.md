@@ -32,6 +32,8 @@ DefaultApplication.open("/some/file.png")
 | Linux   | Debian 8.0   | `✅`      |
 | OS X    | Darwin 17.7  | `✅`      |
 | Windows | 10           | `✅`      |
+| Windows | 11           | `✅`      |
+| WSL2    | Ubuntu 20.04 | `✅`      |
 
 If your OS/version is missing, please test as described below and open an issue with the information so that this table can be extended.
 
