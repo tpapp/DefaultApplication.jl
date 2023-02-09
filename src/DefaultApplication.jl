@@ -17,7 +17,7 @@ The argument `wait` is passed to `run`.
 """
 function open(filename; wait = false)
     cmd = _open_cmd(filename)
-    if isnothing(cmd)
+    if cmd == nothing
         @warn("Opening files with the default application is not supported on this OS.",
         KERNEL = Sys.KERNEL)
     else
