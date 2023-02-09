@@ -16,16 +16,31 @@ Open a file with the default application determined by the OS.
 The argument `wait` is passed to `run`.
 """
 function open(filename; wait = false)
+    cmd = _open_cmd(filename)
+    if isnothing(cmd)
+        @warn("Opening files with the default application is not supported on this OS.",
+        KERNEL = Sys.KERNEL)
+    else
+        run(cmd; wait = wait)
+    end
+end
+
+"""
+    DefaultApplication._open_cmd(path)
+
+`Cmd` that, when, run, opens the given path with the default application
+for the OS.
+"""
+function _open_cmd(path)
     @static if Sys.isapple()
-        run(`open $(filename)`; wait = wait)
+        return `open $(path)`
     elseif _is_wsl
         # Powershell can open *relative* paths in WSL, hence using relpath
         # Could use wslview instead, but powershell is more universally available.
         # Could use cmd + wslpath instead, but cmd complains about the working directory.
-        path = filename
         try
             if ispath(path)
-                path = relpath(filename)
+                path = relpath(path)
             else
                 # Leave e.g. URLs alone (`relpath` deletes one of the
                 # slashes in `https://`, and removes `#` parameters)
@@ -33,31 +48,30 @@ function open(filename; wait = false)
         catch
             # `stat` (which is called by `ispath`) fails if the given path
             # is too long (`IOError: … (ENAMETOOLONG)`). In that case,
-            # also leave `filename` as is.
+            # also leave `path` as is.
         end
-        run(_powershell_start_cmd(path); wait = wait)
+        return _powershell_start_cmd(path)
     elseif Sys.islinux() || Sys.isbsd()
-        run(`xdg-open $(filename)`; wait = wait)
+        return `xdg-open $(path)`
     elseif Sys.iswindows()
         cmd_exe = get(ENV, "COMSPEC", "cmd.exe")
-        cmd = `$(cmd_exe) /c start $(filename)`
+        cmd = `$(cmd_exe) /c start $(path)`
         if length(string(cmd)) > 8191
             # Command too long for CMD.exe; use Powershell instead.
             # (https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/command-line-string-limitation)
-            cmd = _powershell_start_cmd(filename)
+            cmd = _powershell_start_cmd(path)
         end
-        run(cmd; wait = wait)
+        return cmd
     else
-        @warn("Opening files the default application is not supported on this OS.",
-              KERNEL = Sys.KERNEL)
+        return nothing
     end
 end
 
 """
-    _powershell_start_cmd(path)
+    DefaultApplication._powershell_start_cmd(path)
 
-PowerShell `Cmd`  to open the given path with its default application.
-Applicable in both Windows and WSL.
+PowerShell command to open the given path with its default application.
+Useable in both Windows and WSL.
 """
 function _powershell_start_cmd(path)
     return `powershell.exe -NoProfile -NonInteractive -Command start \"$(path)\"`
