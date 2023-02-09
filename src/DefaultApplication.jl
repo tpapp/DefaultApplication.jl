@@ -22,12 +22,18 @@ function open(filename; wait = false)
         # Powershell can open *relative* paths in WSL, hence using relpath
         # Could use wslview instead, but powershell is more universally available.
         # Could use cmd + wslpath instead, but cmd complains about the working directory.
-        if _is_ok_to_relpath(filename)
-            path = relpath(filename)
-        else
-            # Leave e.g. URLs alone (`relpath` deletes one of the
-            # slashes in `https://` and removes `#` parameters)
-            path = filename
+        path = filename
+        try
+            if ispath(path)
+                path = relpath(filename)
+            else
+                # Leave e.g. URLs alone (`relpath` deletes one of the
+                # slashes in `https://`, and removes `#` parameters)
+            end
+        catch
+            # `stat` (which is called by `ispath`) fails if the given path
+            # is too long (`IOError: … (ENAMETOOLONG)`). In that case,
+            # also leave `filename` as is.
         end
         run(_powershell_start_cmd(path); wait = wait)
     elseif Sys.islinux() || Sys.isbsd()
@@ -35,7 +41,9 @@ function open(filename; wait = false)
     elseif Sys.iswindows()
         cmd_exe = get(ENV, "COMSPEC", "cmd.exe")
         cmd = `$(cmd_exe) /c start $(filename)`
-        if _win__cmd_is_too_long(cmd)
+        if length(string(cmd)) > 8191
+            # Command too long for CMD.exe; use Powershell instead.
+            # (https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/command-line-string-limitation)
             cmd = _powershell_start_cmd(filename)
         end
         run(cmd; wait = wait)
@@ -45,22 +53,16 @@ function open(filename; wait = false)
     end
 end
 
-# https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/command-line-string-limitation
-_win__cmd_is_too_long(cmd) = length(string(cmd)) > 8191
+"""
+    _powershell_start_cmd(path)
 
-_powershell_start_cmd(path) = `powershell.exe -NoProfile -NonInteractive -Command start \"$(path)\"`
-# Quotes around the filename are to deal with spaces.
-# (The ''-quotes added by ``-interpolation are not enough).
-
-_is_ok_to_relpath(path) = begin
-    try
-        file_exists = ispath(path)
-        return file_exists
-    catch
-        # `stat` (which is called by `ispath`) fails if the given path
-        # is too long (`IOError: … (ENAMETOOLONG)`)
-        return false
-    end
+PowerShell `Cmd`  to open the given path with its default application.
+Applicable in both Windows and WSL.
+"""
+function _powershell_start_cmd(path)
+    return `powershell.exe -NoProfile -NonInteractive -Command start \"$(path)\"`
+    # Quotes around the filename are to deal with spaces.
+    # (The ''-quotes added by ``-interpolation are not enough).
 end
 
 """
